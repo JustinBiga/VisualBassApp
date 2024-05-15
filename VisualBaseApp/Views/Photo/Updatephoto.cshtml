@@ -1,0 +1,19 @@
+﻿@model Photo
+
+<h2>Update @Model.Title</h2>
+
+@using (Html.BeginForm("UpdatePhotoToDatabase", "Photo", "Post"))
+{
+    <input asp-for="Id" type="hidden" value="@Model.Id" />
+
+    <label asp-for="Title" class="control-label">Title</label>
+    <input type="text" name="Title" class="form-control" value="@Model.Title" />
+
+    <label asp-for="Description" class="control-label">Description</label>
+    <input type="text" name="Description" class="form-control" value="@Model.Description" />
+
+    <label asp-for="FilePath" class="control-label">FilePath</label>
+    <input type="text" name="FilePath" class="form-control" value="@Model.FilePath" />
+
+    <input type="submit" value="Update Photo" class="btn btn-primary" />
+}

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Photo>
+
+@{
+    ViewData["Title"] = "View All Photos";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div style="display: block">
+    <a href="/Photo/Insert/">Create a New Photo</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>File Path</th>
+            <th>ImageData</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var photo in Model)
+        {
+            <tr>
+                <td><a href="/Photo/ViewPhoto/@photo.Id">@photo.Id</a></td>
+                <td>@photo.Title</td>
+                <td>@photo.Description</td>
+                <td>@photo.FilePath</td>
+                <td>@photo.ImageData</td>
+
+            </tr>
+
+        }
+    </tbody>
+
+    @foreach (var photo in Model)
+    {
+        <div>
+
+            @if (photo.ImageData != null && photo.ImageData.Count > 0)
+            {
+                <img src="@Url.Action("GetImage", "Photos", new { id = photo.ImageData.First().Id })" alt="Photo Image" />
+            }
+        </div>
+    }
+</table>

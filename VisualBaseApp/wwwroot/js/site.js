@@ -3,3 +3,10 @@
 
 // Write your JavaScript code.
 
+/* script.js */
+
+// JavaScript code for your project
+
+//document.addEventListener("DOMContentLoaded", function () {
+//    // JavaScript code to execute after the DOM has loaded
+//});

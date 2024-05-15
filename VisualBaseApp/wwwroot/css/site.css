@@ -2,9 +2,9 @@
   font-size: 14px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 800px) {
   html {
-    font-size: 16px;
+    font-size: 20px;
   }
 }
 
@@ -13,10 +13,37 @@
 }
 
 html {
-  position: relative;
+  position: page;
   min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+  margin-bottom: 30px;
+  color:blue;
+}
+
+/* styles.css */
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url(https://wallpaperaccess.com/full/1567809.jpg);
+    background-size: 100% 100%; /* Make the background image cover the entire screen */
+    background-position: unset;
+    background-repeat: no-repeat;
+    color: white; /* Set text color to white */
+    /* CSS */
+
+.italic-text{
+    font-style: italic;
+
+}
+.content {
+    padding: 20px; /* Add padding to the content */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background color for readability */
+    border-radius: 10px; /* Rounded corners for the content */
+}
+
+h1, p {
+    margin: 0; /* Remove default margin for h1 and p */
 }
