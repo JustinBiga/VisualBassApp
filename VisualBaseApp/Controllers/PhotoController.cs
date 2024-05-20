@@ -93,43 +93,43 @@ namespace VisualBaseApp.Controllers
             var photo = repo.GetphotoById(id);
             return View(photo);
         }
-        [HttpPost]
-        public IActionResult Create(PhotoUploadViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                string query = "INSERT INTO Photos (Title, FilePath) VALUES (@Title, @FilePath); SELECT LAST_INSERT_ID();";
-                List<MySqlParameter> parameters = new List<MySqlParameter>
-                {
-                    new MySqlParameter("@Title", model.Title),
-                    new MySqlParameter("@FilePath", model.FilePath)
-                };
+        //[HttpPost]
+        //public IActionResult Create(PhotoUploadViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        string query = "INSERT INTO Photos (Title, FilePath) VALUES (@Title, @FilePath); SELECT LAST_INSERT_ID();";
+        //        List<MySqlParameter> parameters = new List<MySqlParameter>
+        //        {
+        //            new MySqlParameter("@Title", model.Title),
+        //            new MySqlParameter("@FilePath", model.FilePath)
+        //        };
 
-                int photoId = ExecuteNonQuery(query, parameters);
-                // Save the image data
-                if (model.PhotoFile != null)
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        model.PhotoFile.CopyTo(memoryStream);
-                        byte[] imageBytes = memoryStream.ToArray();
+        //        int photoId = ExecuteNonQuery(query, parameters);
+        //        // Save the image data
+        //        if (model.PhotoFile != null)
+        //        {
+        //            using (var memoryStream = new MemoryStream())
+        //            {
+        //                model.PhotoFile.CopyTo(memoryStream);
+        //                byte[] imageBytes = memoryStream.ToArray();
 
-                        query = "INSERT INTO ImageData (PhotoId, ImageBytes) VALUES (@PhotoId, @ImageBytes)";
-                        parameters = new List<MySqlParameter>
-                {
-                    new MySqlParameter("@PhotoId", photoId),
-                    new MySqlParameter("@ImageBytes", imageBytes)
-                };
+        //                query = "INSERT INTO ImageData (PhotoId, ImageBytes) VALUES (@PhotoId, @ImageBytes)";
+        //                parameters = new List<MySqlParameter>
+        //        {
+        //            new MySqlParameter("@PhotoId", photoId),
+        //            new MySqlParameter("@ImageBytes", imageBytes)
+        //        };
 
-                        ExecuteNonQuery(query, parameters);
-                    }
-                }
+        //                ExecuteNonQuery(query, parameters);
+        //            }
+        //        }
 
-                return RedirectToAction(nameof(Index));
-            }
+        //        return RedirectToAction(nameof(Index));
+        //    }
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
         public int ExecuteNonQuery(string query, List<MySqlParameter> parameters)
         {
@@ -160,12 +160,72 @@ namespace VisualBaseApp.Controllers
         //    return NotFound();
         //}
 
+        //[HttpPost]
+        //public async Task<IActionResult> Create(PhotoUploadViewModel model)
+        //{
+        //if (ModelState.IsValid)
+        //{
+        //    // Save the photo data to the database
+        //    var photo = new Photo
+        //    {
+        //        Title = model.Title,
+        //        FilePath = model.FilePath,
+        //        ImageData = new List<ImageData>()
+        //    };
 
+        //    if (model.PhotoFile != null)
+        //    {
+        //        var fileName = Path.GetFileName(model.PhotoFile.FileName);
+        //        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "create", fileName);
 
+        //        using (var stream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            await model.PhotoFile.CopyToAsync(stream);
+        //        }
 
+        //        // Save other data to the database
+        //        // ...
+        //    }
 
+        //    return RedirectToAction(nameof(Index));
+        //}
 
+        //    return View(model);
 
+        [HttpPost]
+        public async Task<IActionResult> Upload(PhotoUploadViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (ModelState.IsValid)
+                {
+                    // Save the photo data to the database
+                    var photo = new Photo
+                    {
+                        Title = model.Title,
+                        FilePath = model.FilePath,
+                        ImageData = new List<ImageData>()
+                    };
+                }
+                // Process the uploaded photo file
+                if (model.PhotoFile != null)
+                {
+                    var fileName = Path.GetFileName(model.PhotoFile.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.PhotoFile.CopyToAsync(stream);
+                    }
+
+                    // Save other data to the database
+                    // ...
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
+        }
     }
 }
-

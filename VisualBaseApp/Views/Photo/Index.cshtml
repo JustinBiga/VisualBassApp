@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Photo>
 
+
 @{
     ViewData["Title"] = "View All Photos";
 }
@@ -35,13 +36,25 @@
     </tbody>
 
     @foreach (var photo in Model)
-    {
+        {
         <div>
 
             @if (photo.ImageData != null && photo.ImageData.Count > 0)
             {
                 <img src="@Url.Action("GetImage", "Photos", new { id = photo.ImageData.First().Id })" alt="Photo Image" />
-            }
+                }
         </div>
-    }
+        }
+        @*@foreach (var photo in Model)
+        {
+            <div>
+                <h3>@photo.Title</h3>
+                <p>@photo.FilePath</p>
+                @if (!string.IsNullOrEmpty(photo.FilePath))
+                {
+                    <img src="~/images/@System.IO.Path.GetFileName(photo.FilePath)" alt="Photo Image" />
+                }
+            </div>
+        }*@
+    
 </table>
